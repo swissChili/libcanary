@@ -7,11 +7,13 @@
 int main ()
 {
     LCIR demo = LCNewIr();
-    LCArg arg = {"foo", String};
-    LCCmd cmd = {pop, 1, &arg};
-    LCCmd cmd1 = {debug, 0};
-    LCPush( &demo, cmd );
-    LCPush( &demo, cmd1 );
+    LCArg foo = {"foo", String};
+    LCArg bar = {"1", Int};
+    LCArg baz = {"baz", String};
+    LCArg args[] = {foo, bar, baz};
+
+    LCCmd qux = {push, 3, args};
+    LCPush(&demo, qux);
 
     LCC(&demo);
 

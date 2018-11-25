@@ -16,7 +16,8 @@ typedef enum LCCall {
     subi,
     debug,
     jump,
-    call
+    call,
+    dfn
 } LCCall;
 
 char * LCCallItems[] = {
@@ -27,7 +28,8 @@ char * LCCallItems[] = {
         "subi",
         "debug",
         "jump",
-        "call"
+        "call",
+        "dfn"
 };
 
 typedef enum LCArgType {
@@ -36,6 +38,13 @@ typedef enum LCArgType {
     String,
     Ref,
 } LCArgType;
+
+char * LCArgTypeItems[] = {
+        "Int",
+        "Float",
+        "String",
+        "Ref"
+};
 
 typedef struct LCArg {
     char * content;
@@ -85,7 +94,15 @@ void LCC(LCIR * ir)
         printf("\n%s", LCCallItems[ir->commands[i].command]);
         for ( int j = 0; j < ir->commands[i].len; j++ )
         {
-            printf(" %s", ir->commands[i].args[j].content);
+            LCArg a = ir->commands[i].args[j];
+            if ( LCArgTypeItems[a.type] == "String" )
+            {
+                printf(" \"%s\"", a.content);
+            }
+            else
+            {
+                printf(" %s", a.content);
+            }
         }
         printf(";\n");
     }
